@@ -1,0 +1,197 @@
+.video-player-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .video-player {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    background: #000;
+    outline: none;
+  }
+  
+  /* Control Bar */
+  .custom-video-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(20, 20, 20, 0.8);
+    border-radius: 10px;
+    color: #fff;
+    position: relative;
+  }
+  
+  /* Grouped control sections */
+  .controls-left,
+  .controls-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  
+  /* Playback */
+  .playback-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .play-pause-btn {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  .play-pause-btn:hover {
+    transform: scale(1.2);
+  }
+  
+  .progress-bar {
+    width:550px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: white;
+  }
+  
+  /* Volume */
+  .volume-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .volume-btn {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .volume-btn:hover {
+    transform: scale(1.2);
+  }
+  
+  .volume-bar {
+    width: 100px;
+    margin-left: 10px;
+    cursor: pointer;
+    accent-color: white;
+  }
+  
+  /* Quality Dropdown */
+  .quality-popup-wrapper {
+    position: relative;
+  }
+  
+  .settings-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .settings-btn:hover {
+    transform: rotate(20deg);
+  }
+  
+  .quality-popup {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    background-color: rgba(30, 30, 30, 0.95);
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 8px 0;
+    min-width: 100px;
+    z-index: 10;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .quality-option {
+    padding: 6px 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+  }
+  
+  .quality-option:hover {
+    background-color: #444;
+  }
+  
+  .quality-option.selected {
+    background-color: #666;
+    font-weight: bold;
+  }
+  
+  /* Fullscreen */
+  .fullscreen-btn button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .fullscreen-btn button:hover {
+    transform: scale(1.2);
+  }
+  
+  /* Delete Button */
+  .delete-btn-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .delete-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    background-color: #555;
+    margin: 6px 0;
+  }
+  
+  .delete-option {
+    color: #fff;
+  }
+  
+  /* Download Button */
+.download-btn button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  transition: transform 0.2s ease;
+}
+
+.download-btn button:hover {
+  transform: scale(1.2);
+}
+
+  
