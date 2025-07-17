@@ -18,13 +18,32 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// ✅ Allow both localhost and production frontend
+// ✅ Allow both localhost and Netlify origin
 const allowedOrigins = [
     "http://localhost:3000",
-    "https://your-tube-01.netlify.app"
+    "https://youtubeclone-frontend.netlify.app/"
 ];
 
-// Socket.IO setup
+// ✅ CORS options for Express
+const corsOptions = {
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+// ✅ Apply CORS middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Preflight
+
+// ✅ Socket.IO setup with same origins
 const io = new Server(server, {
     cors: {
         origin: allowedOrigins,
@@ -32,9 +51,9 @@ const io = new Server(server, {
     }
 });
 
-// Socket.IO signaling handlers
-io.on('connection', socket => {
-    console.log('New user connected:', socket.id);
+// ✅ Socket handlers
+io.on('connection', (socket) => {
+    console.log('Socket connected:', socket.id);
 
     socket.on('join-room', roomId => {
         socket.join(roomId);
@@ -59,58 +78,35 @@ io.on('connection', socket => {
     });
 });
 
-// ✅ Updated CORS configuration
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
-
-// Middleware
+// ✅ Middleware
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(bodyParser.json());
 
-// Static file serving
+// ✅ Serve uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
-app.get('/', (req, res) => {
-    res.send("YourTube is working");
-});
+// ✅ Routes
+app.get('/', (req, res) => res.send("YourTube is working"));
 app.use('/user', userroutes);
 app.use('/video', videoroutes);
 app.use('/comment', commentroutes);
 
-// Optional: for screen sharing support
+// ✅ Optional: screen sharing headers
 app.use((req, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
     next();
 });
 
-// Start server
+// ✅ Connect to MongoDB
+const DB_URL = process.env.DB_URL;
+mongoose.connect(DB_URL)
+    .then(() => console.log("MongoDB Database connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+
+// ✅ Start the server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`);
 });
-
-// DB connection
-const DB_URL = process.env.DB_URL;
-mongoose.connect(DB_URL)
-    .then(() => {
-        console.log("MongoDB Database connected");
-    })
-    .catch((error) => {
-        console.error("MongoDB connection error:", error);
-    });
